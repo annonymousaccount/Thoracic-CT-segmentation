@@ -1,0 +1,533 @@
+layer {
+  name: "input"
+  type: "Input"
+  top: "data"
+  input_param {
+    # These dimensions are purely for sake of example;
+    # see infer.py for how to reshape the net to the given input size.
+    shape { dim: 1 dim: 1 dim: 512 dim: 512 }
+  }
+}
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 32
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu1_1"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layer {
+  name: "conv1_2"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv1_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 32
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu1_2"
+  type: "ReLU"
+  bottom: "conv1_2"
+  top: "conv1_2"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1_2"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+
+
+# --------------------------- layer 2 for T1------------------------
+layer {
+  name: "conv2_1"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu2_1"
+  type: "ReLU"
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+layer {
+  name: "conv2_2"
+  type: "Convolution"
+  bottom: "conv2_1"
+  top: "conv2_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu2_2"
+  type: "ReLU"
+  bottom: "conv2_2"
+  top: "conv2_2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2_2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+
+
+# --------------------------- layer 3 for T1------------------------
+layer {
+  name: "conv3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 96
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu3_1"
+  type: "ReLU"
+  bottom: "conv3_1"
+  top: "conv3_1"
+}
+layer {
+  name: "conv3_2"
+  type: "Convolution"
+  bottom: "conv3_1"
+  top: "conv3_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 96
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu3_2"
+  type: "ReLU"
+  bottom: "conv3_2"
+  top: "conv3_2"
+}
+
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3_2"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+
+
+# --------------------------- layer 4 for T1------------------------
+layer {
+  name: "conv4_1"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "conv4_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu4_1"
+  type: "ReLU"
+  bottom: "conv4_1"
+  top: "conv4_1"
+}
+layer {
+  name: "conv4_2"
+  type: "Convolution"
+  bottom: "conv4_1"
+  top: "conv4_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "relu4_2"
+  type: "ReLU"
+  bottom: "conv4_2"
+  top: "conv4_2"
+}
+
+
+# --------------------------- layer 5 deconv1------------------------
+
+
+layer {
+  name: "deconv1"
+  type: "Deconvolution"
+  bottom: "conv4_2"
+  top: "deconv1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  
+  convolution_param {
+    num_output: 64
+    kernel_size: 4
+    stride: 2
+    pad: 1
+    weight_filler {
+      type: "xavier"
+      
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+      
+    }
+    
+    
+  }
+}
+
+layer {
+  name: "relud1"
+  type: "ReLU"
+  bottom: "deconv1"
+  top: "deconv1"
+}
+
+layer {
+  type: "Concat"
+  name: "concat1"
+  top: "concat1"
+  bottom: "deconv1"
+  bottom: "conv3_2"
+}
+
+
+
+# --------------------------- layer 6 deconv2------------------------
+
+
+layer {
+  name: "deconv2"
+  type: "Deconvolution"
+  bottom: "concat1"
+  top: "deconv2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  
+  convolution_param {
+    num_output: 64
+    kernel_size: 4
+    stride: 2
+    pad: 1
+    weight_filler {
+      type: "xavier"
+      
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+      
+    }
+    
+    
+  }
+}
+
+layer {
+  name: "relud2"
+  type: "ReLU"
+  bottom: "deconv2"
+  top: "deconv2"
+}
+
+layer {
+  type: "Concat"
+  name: "concat2"
+  top: "concat2"
+  bottom: "deconv2"
+  bottom: "conv2_2"
+}
+# --------------------------- layer 7 deconv3------------------------
+layer {
+  name: "deconv3"
+  type: "Deconvolution"
+  bottom: "concat2"
+  top: "deconv3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  
+  convolution_param {
+    num_output: 32
+    kernel_size: 4
+    stride: 2
+    pad: 1
+    weight_filler {
+      type: "xavier"
+      
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+      
+    }
+    
+    
+  }
+}
+
+layer {
+  name: "relud3"
+  type: "ReLU"
+  bottom: "deconv3"
+  top: "deconv3"
+}
+
+layer {
+  type: "Concat"
+  name: "concat3"
+  top: "concat3"
+  bottom: "deconv3"
+  bottom: "conv1_2"
+}
+
+
+# --------------------------- layer 8 deconv4------------------------
+layer {
+  name: "upscore"
+  type: "Convolution"
+  bottom: "concat3"
+  top: "upscore"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 5
+    pad: 3
+    kernel_size: 7
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+#----------loss layer--------------------
+layer { type: 'Split' name: 'splitting'
+  bottom: 'upscore' top: 'unary' top: 'Q0'
+}
+
+layer {
+  name: "inference1"#if you set name "inference1", code will load parameters from caffemodel.
+  type: "MultiStageMeanfield"
+  bottom: "unary"
+  bottom: "Q0"
+  bottom: "data"
+  top: "pred"
+  param {
+    lr_mult: 10000#learning rate for W_G
+  }
+  param {
+  lr_mult: 10000#learning rate for W_B
+  }
+  param {
+  lr_mult: 1000 #learning rate for compatiblity transform matrix
+  }
+  multi_stage_meanfield_param {
+   num_iterations: 5
+   compatibility_mode: POTTS#Initialize the compatilibity transform matrix with a matrix whose diagonal is -1.
+   threshold: 2
+   theta_alpha: 100
+   theta_beta: 30
+   theta_gamma: 10
+   spatial_filter_weight: 3
+   bilateral_filter_weight: 5
+  }
+}
+
+
+
+
+
+
